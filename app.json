@@ -1,0 +1,39 @@
+{
+  "expo": {
+    "name": "infnet_app",
+    "slug": "snack-a3ca08b3-4324-49df-901c-63fe5a4ef080",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "auto",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "userInterfaceStyle": "automatic"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
+      },
+      "userInterfaceStyle": "automatic"
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "description": "Sistema criado com React Native e React Native Paper para dispositivos mobile.",
+    "plugins": [
+      "expo-secure-store"
+    ],
+    "entryPoint": "./Main.js",
+    "extra": {
+      "eas": {
+        "projectId": "222764d0-1a83-45ab-b84c-3c27aff0bd9e"
+      }
+    }
+  }
+}
