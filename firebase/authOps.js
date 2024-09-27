@@ -4,8 +4,7 @@ import { auth } from "./app";
 const signUp = async (email, password) => {
 
     try {
-        await createUserWithEmailAndPassword(auth, email, password);
-        return true;
+        return await createUserWithEmailAndPassword(auth, email, password);
     }
     catch (error) {
         return { error: true, message: error.message };
@@ -16,8 +15,7 @@ const signUp = async (email, password) => {
 const login = async (email, password) => {
 
     try {
-        await signInWithEmailAndPassword(auth, email, password);
-        return true;
+        return await signInWithEmailAndPassword(auth, email, password);
     }
     catch (error) {
         return { error: true, message: error.message };
@@ -27,7 +25,7 @@ const login = async (email, password) => {
 
 const logout = async () => {
 
-    signOut(auth).then(() => {
+    await signOut(auth).then(() => {
         console.log("Logged out.");
     }).catch((error) => {
         console.log(error.message);

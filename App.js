@@ -24,6 +24,7 @@ export default function App() {
   const { session, appTheme, toggleMessage, setToggleMessage } = useContext(AppContext);
 
   const colorScheme = useColorScheme();
+  
   useEffect(() => console.log(appTheme + " - appTheme"));
 
   // console.log(colorScheme);

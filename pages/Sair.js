@@ -3,6 +3,7 @@ import { Button } from "react-native-paper";
 import { logout } from "../firebase/authOps";
 import { AppContext } from "../contexts/AppContext";
 import { useContext } from "react";
+import { createTables, dropTable } from "../database/transactions";
 
 const Sair = ({ navigation }) => {
 
@@ -10,7 +11,12 @@ const Sair = ({ navigation }) => {
 
   const handleExit = async () => {
 
-    logout();
+    await logout();
+    await dropTable("user");
+    await dropTable("item");
+    await dropTable("item_image");
+    await createTables();
+    console.log("Tables regenerated.");
     setSession(false);
     setUserData({ uid: "", email: "" });
     setToggleMessage("Usuário deslogado!");

@@ -1,7 +1,13 @@
 import { CameraView, useCameraPermissions } from 'expo-camera';
 import { forwardRef, useImperativeHandle, useState } from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
-import { Dialog, FabButton, Modal } from '..';
+import { Dialog as Dlg } from 'react-native-paper';
+// import { Button, Dialog, FabButton, Modal, Text } from '..';
+import OwnDialog from '../Dialog';
+import OwnButton from '../Button';
+import OwnFAB from '../FabButton';
+import OwnModal from '../Modal';
+import OwnText from '../Text';
 
 const Camera = forwardRef(({setCameraVisible, onCapture}, ref) => {
 
@@ -9,6 +15,7 @@ const Camera = forwardRef(({setCameraVisible, onCapture}, ref) => {
     const [permission, requestPermission] = useCameraPermissions();
     const [dialogGrantCamera, setDialogGrantCamera] = useState(true);
     const [cameraRef, setCameraRef] = useState(null);
+    // console.log("Permission: " + permission);
 
     const toggleCameraFacing = () => {
         setFacing(current => (current === 'back' ? 'front' : 'back'));
@@ -35,60 +42,49 @@ const Camera = forwardRef(({setCameraVisible, onCapture}, ref) => {
     );
 
     if (!permission) {
-        return <View />;
+        // console.log("!permission: " + permission);
+        return ( <View><OwnText>Permissão não concedida.</OwnText></View> );
     }
 
     if (!permission.granted) {
+        // console.log("!permission.granted " + permission);
         return (
-            <Dialog
-                icon={"alert"}
-                title={"Permitir câmera"}
-                text={"Deseja permitir que o aplicativo acesse sua câmera?"}
+            <OwnDialog
                 visible={dialogGrantCamera}
-                setVisibility={setDialogGrantCamera}
-                onDismiss={() => setDialogGrantCamera(false)}
-                actions={[
-                    {
-                        text: "Cancelar",
-                        onPress: () => {
-                            setDialogGrantCamera(false);
-                            setCameraVisible(false);
-                        }
-                    },
-                    {
-                        text: "Permitir",
-                        onPress: async () => {
-                            await requestPermission();
-                            setDialogGrantCamera(false);
-                            setCameraVisible(false);
-                        }
-                    }
-                ]}
-            />
+                onDismiss={() => { setDialogGrantCamera(false); setCameraVisible(false); }}>
+                    <Dlg.Icon icon={"alert"} />
+                    <Dlg.Title>Permitir acesso à camera</Dlg.Title>
+                    <Dlg.Content>
+                        <OwnText>Deseja permitir que o aplicativo acesse sua câmera?</OwnText>
+                    </Dlg.Content>
+                    <Dlg.Actions>
+                        <OwnButton onPress={() => { setDialogGrantCamera(false); setCameraVisible(false); }}>Cancelar</OwnButton>
+                        <OwnButton onPress={async () => { await requestPermission(); setDialogGrantCamera(false); closeCamera(); }}>Permitir</OwnButton>
+                    </Dlg.Actions>
+                </OwnDialog>
         );
     }
 
     return (
-        <Modal style={styles.container}>
+        <OwnModal style={styles.container}>
             <CameraView
                 ref={(ref) => setCameraRef(ref)}
                 style={styles.camera} facing={facing}>
-                <FabButton
+                <OwnFAB
                     onPress={closeCamera}
                     icon="close"
-                    style={styles.closeButton}
-                />
+                    style={styles.closeButton} />
                 <View style={styles.buttonContainer}>
                     <View style={styles.button}>
-                        <TouchableOpacity >
-                            <FabButton
+                        <TouchableOpacity>
+                            <OwnFAB
                                 onPress={() => ref.current.takePicture()}
                                 icon="camera"
                                 style={styles.takePicture}
                             />
                         </TouchableOpacity>
                         <TouchableOpacity>
-                            <FabButton
+                            <OwnFAB
                                 onPress={toggleCameraFacing}
                                 icon="camera-flip"
                                 style={styles.takePicture}
@@ -97,9 +93,9 @@ const Camera = forwardRef(({setCameraVisible, onCapture}, ref) => {
                     </View>
                 </View>
             </CameraView>
-        </Modal>
+        </OwnModal>
     );
-})
+});
 
 const styles = StyleSheet.create({
     container: {
@@ -108,7 +104,7 @@ const styles = StyleSheet.create({
     },
     closeButton: {
         position: 'absolute',
-        zIndex: 999,
+        zIndex: 10,
         top: 10,
         right: 10,
         borderRadius: 100

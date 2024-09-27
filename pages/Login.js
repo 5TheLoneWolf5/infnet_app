@@ -5,6 +5,7 @@ import { useContext, useEffect, useState } from "react";
 import { login } from "../firebase/authOps";
 import { Link } from "@react-navigation/native";
 import { AppContext } from "../contexts/AppContext";
+import { populateAll, syncLocalOnlyData, } from "../database/transactions";
 
 const Login = ({ navigation }) => {
 
@@ -13,24 +14,45 @@ const Login = ({ navigation }) => {
   const [errors, setErrors] = useState([]);
   const [hidePassword, setHidePassword] = useState(true);
   
-  const { setToggleMessage, setSession } = useContext(AppContext);
+  const { setToggleMessage, setUserData, setSession } = useContext(AppContext);
 
   // useEffect(() => console.log(emailInput));
 
   const handleLogin = async () => {
 
     const result = await login(emailInput, passwordInput);
+    // console.log(result);
 
     // result?.error ? setErrors((prevArray) => [...prevArray, result.message]) : navigation.navigate("Home");
 
     if (result?.error) {
       setErrors((prevArray) => [...prevArray, result.message]);
     } else {
-        setSession(true);
+        const user = result.user.toJSON();
+        // console.log(user);
+
+        // await populateAll(user.uid);
+        await syncLocalOnlyData();
+
+        // await insert("user", {
+        //   uid: user.uid,
+        //   email: user.email, 
+        //   emailVerified: "",
+        //   displayName: "", 
+        //   username: "",
+        //   photoURL: "",
+        //   phoneNumber: "",
+        //   createdAt: user.createdAt,
+        //   sync: 1,
+        // });
+         
+        setUserData({ uid: user.uid, email: user.email, });
         setToggleMessage("Usuário logado!");
+        // populateLocalUser(user.uid);
         setEmailInput("");
         setPasswordInput("");
         setErrors([]);
+        setSession(true);
         // navigation.navigate("Home");
     }
 

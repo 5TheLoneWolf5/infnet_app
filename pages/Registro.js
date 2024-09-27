@@ -5,6 +5,7 @@ import { useContext, useEffect, useState } from "react";
 import { signUp } from "../firebase/authOps";
 import { Link } from "@react-navigation/native";
 import { AppContext } from "../contexts/AppContext";
+import { saveData } from "../firebase/realtime";
 
 const Registro = ({ navigation }) => {
 
@@ -13,22 +14,40 @@ const Registro = ({ navigation }) => {
   const [errors, setErrors] = useState([]);
   const [hidePassword, setHidePassword] = useState(true);
 
-  const { setToggleMessage } = useContext(AppContext);
+  const { setToggleMessage, isSigningUp, } = useContext(AppContext);
 
   // useEffect(() => console.log(emailInput));
 
   const handleRegister = async () => {
 
+    isSigningUp.current = true;
     const result = await signUp(emailInput, passwordInput);
 
     if (result?.error) {
       setErrors((prevArray) => [...prevArray, result.message]);
+      // isSigningUp.current = false;
     } else {
+        const user = result.user.toJSON();
+        // console.log(user);
+
+        // console.log(user, user.uid);
+        await saveData("user", {
+          uid: user.uid,
+          email: user.email, 
+          emailVerified: "",
+          displayName: "", 
+          username: "",
+          photoURL: "",
+          phoneNumber: "",
+          createdAt: user.createdAt,
+          sync: 1,
+        }, user.uid);
         setToggleMessage("Usuário registrado!");
         setEmailInput("");
         setPasswordInput("");
         setErrors([]);
         navigation.navigate("Login");
+        // isSigningUp.current = false;
     }
 
   };

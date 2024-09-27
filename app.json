@@ -1,29 +1,31 @@
 {
   "expo": {
-    "name": "infnet_app",
+    "name": "Receitas Infnet",
     "slug": "snack-a3ca08b3-4324-49df-901c-63fe5a4ef080",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/infnet_receitas.png",
     "userInterfaceStyle": "auto",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/infnet_receitas.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
     "ios": {
       "supportsTablet": true,
-      "userInterfaceStyle": "automatic"
+      "userInterfaceStyle": "automatic",
+      "bundleIdentifier": "infnet.app.dev"
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/infnet_receitas.png",
         "backgroundColor": "#ffffff"
       },
-      "userInterfaceStyle": "automatic"
+      "userInterfaceStyle": "automatic",
+      "package": "infnet.app.dev"
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/infnet_receitas.png"
     },
     "description": "Sistema criado com React Native e React Native Paper para dispositivos mobile.",
     "plugins": [

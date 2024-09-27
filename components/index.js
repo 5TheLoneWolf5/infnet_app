@@ -16,4 +16,7 @@ export { default as AvatarImage } from "./AvatarImage";
 export { default as Text } from "./Text";
 export { default as Camera } from "./Camera";
 export { default as Modal } from "./Modal";
-export { default as Dialog } from "./Modal";
+export { default as Dialog } from "./Dialog";
+export { default as Surface } from "./Surface";
+export { default as ActivityIndicator } from "./ActivityIndicator";
+export { default as AvatarIcon } from "./AvatarIcon";
