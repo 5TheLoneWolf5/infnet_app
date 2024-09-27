@@ -40,7 +40,7 @@ export default function AppProvider(props) {
         onAuthStateChanged(auth, async (user) => {
             if (user && !isSigningUp.current) {
                 // console.log("Been Here!!!");
-                // await populateAll(user.uid);
+                await populateAll(user.uid);
                 await syncLocalOnlyData();
                 setToggleMessage("Usuário logado!");
                 setUserData({ uid: user.uid, email: user.email, });

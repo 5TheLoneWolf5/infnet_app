@@ -2,7 +2,7 @@ import { View, StyleSheet, ScrollView } from "react-native";
 import { FabButton, IconButton, List, Text } from "../components";
 import { List as Ls } from "react-native-paper";
 import { useCallback, useContext, useState } from "react";
-import { drop, populateLocalItems, select, verifyConnection } from "../database/transactions";
+import { drop, populateLocalImages, populateLocalItems, select, verifyConnection } from "../database/transactions";
 import { AppContext } from "../contexts/AppContext";
 import { useFocusEffect } from "@react-navigation/native";
 
@@ -17,6 +17,7 @@ const Home = ({ navigation }) => {
     if (await verifyConnection()) {
       // console.log(userData.uid);
       await populateLocalItems();
+      await populateLocalImages();
     }
 
     const data = await select("item", ["uid", "title", "description", "createdAt", "sync"], "", true);

@@ -55,9 +55,9 @@ const Perfil = ({ navigation }) => {
           const uri = user.photoURL.split("/");
           await uploadImageStorage(user.photoURL, uri[uri.length-1]); 
         }
-        setToggleMessage("Dados atualizados com sucesso!!!")
-    } catch (err) {
-      setToggleMessage("Um erro ocorreu ao atualizar o perfil.")
+        setToggleMessage("Dados atualizados!");
+    } catch (error) {
+      setToggleMessage("Um erro ocorreu.");
     }
   }
 

@@ -4,9 +4,9 @@ import { TextInput, Card as Cd } from "react-native-paper";
 import { useCallback, useContext, useRef, useState } from "react";
 import * as ImagePicker from "expo-image-picker";
 import { AppContext } from "../contexts/AppContext";
-import { drop, generateUID, insert, populateLocalImages, populateLocalItems, select, update, verifyConnection } from "../database/transactions";
+import { drop, generateUID, insert, select, update } from "../database/transactions";
 import { useFocusEffect } from "@react-navigation/native";
-import { deleteImage, uploadImageStorage } from "../firebase/storage";
+import { uploadImageStorage } from "../firebase/storage";
 
 const NovoItem = ({ route, navigation }) => {
 
@@ -34,11 +34,11 @@ const NovoItem = ({ route, navigation }) => {
   const loadData = async () => {
     if (uid) {
 
-      if (await verifyConnection()) {
-        // console.log(userData.uid);
-        await populateLocalItems();
-        await populateLocalImages();
-      }
+      // if (await verifyConnection()) {
+      //   // console.log(userData.uid);
+      //   await populateLocalItems();
+      //   await populateLocalImages();
+      // }
 
         console.log("uid: " + uid);
         const d = await select("item", [ "uid", "title", "description", "createdAt", "sync"], `uid='${uid}'`, false);
